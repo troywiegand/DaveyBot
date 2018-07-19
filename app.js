@@ -21,7 +21,12 @@ food = (message) =>{
 }
 
 help = (message) =>{
-    message.channel.send('Hello, I\'m DaveyBot. \n Here\'s a list of my commands: \n \n d!food ------ recieve a message of one of DaveyBot\'s fave foods')
+    message.channel.send('Hello, I\'m DaveyBot. \n Here\'s a list of my commands: \n \n '+
+    'd!food     ------ recieve a message of one of DaveyBot\'s fave foods \n '+
+    'd!shrimp   ------ DaveyBot will inform on how to deal with the Shrimp Button \n '+
+    'd!sing     ------ DaveyBot wills ing Happy Birthday to you \n '+
+    'd!fortnite ------ DaveyBot will complain about kids and fortnite \n '+
+    'd!fretless ------ Davey Bot will tell the tale of starting Fretless')
 }
 
 let prefix = 'd!'
@@ -37,6 +42,7 @@ client.on('message', message=>{
         message.channel.send('Don\'t you cuss at me!')   
     }
 
+
     if(message.content.includes('jesus') || message.content.includes('Jesus')){
         message.channel.send('You can just call me DaveyBot')   
     }
@@ -45,12 +51,24 @@ client.on('message', message=>{
         message.channel.send('npm install react')   
     }
 
+    if(message.content.includes('pokemon')){
+        message.channel.send('idk if I could catch them all')   
+    }
+
     if(message.content.includes('anime')){
         message.channel.send('I hear you kids like the anime')   
     }
 
     if(message.content.includes(prefix+'shrimp')){
         message.channel.send('SLAM THAT SHRIMP BUTTON KIDS!!')   
+    }
+
+    if(message.content.includes(prefix+'fretless')){
+        message.channel.send('My friend texted me asking me if I wanted to start a company, I was like *I dont even care if you\'re selling drugs to school children at this point, Im in*')   
+    }
+
+    if(message.content.includes(prefix+'fortnite')){
+        message.channel.send('kids nowadays are all about fornite, pew pew, p0wning n00bs')   
     }
 
     if(message.content.includes(prefix+'sing')){
