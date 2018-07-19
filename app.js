@@ -22,9 +22,9 @@ food = (message) =>{
 
 help = (message) =>{
     message.channel.send('Hello, I\'m DaveyBot. \n Here\'s a list of my commands: \n \n '+
-    'd!food     ------ recieve a message of one of DaveyBot\'s fave foods \n '+
+    'd!food     ------ DaveyBot will tell one of his fave foods \n '+
     'd!shrimp   ------ DaveyBot will inform on how to deal with the Shrimp Button \n '+
-    'd!sing     ------ DaveyBot wills ing Happy Birthday to you \n '+
+    'd!sing     ------ DaveyBot will sing Happy Birthday to you \n '+
     'd!fortnite ------ DaveyBot will complain about kids and fortnite \n '+
     'd!fretless ------ Davey Bot will tell the tale of starting Fretless')
 }
@@ -38,7 +38,7 @@ client.on('message', message=>{
     if(message.content.startsWith(prefix + "help")){
         help(message)
     }
-    if(message.content.includes('fuck') ||message.content.includes('Fuck')){
+    if(message.content.includes('fuck') ||message.content.includes('Fuck') ||message.content.includes('shit') ){
         message.channel.send('Don\'t you cuss at me!')   
     }
 
