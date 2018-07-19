@@ -45,6 +45,14 @@ client.on('message', message=>{
         message.channel.send('npm install react')   
     }
 
+    if(message.content.includes('anime')){
+        message.channel.send('I hear you kids like the anime')   
+    }
+
+    if(message.content.includes(prefix+'shrimp')){
+        message.channel.send('SLAM THAT SHRIMP BUTTON KIDS!!')   
+    }
+
     if(message.content.includes(prefix+'sing')){
         message.channel.send('HAAAPPPPPYYY BIRTHDAY TO YOOOOUUUU!!!!')   
     }
