@@ -33,12 +33,20 @@ client.on('message', message=>{
     if(message.content.startsWith(prefix + "help")){
         help(message)
     }
-    if(message.content.includes('fuck')){
+    if(message.content.includes('fuck') ||message.content.includes('Fuck')){
         message.channel.send('Don\'t you cuss at me!')   
     }
 
     if(message.content.includes('jesus') || message.content.includes('Jesus')){
         message.channel.send('You can just call me DaveyBot')   
+    }
+
+    if(message.content.includes('React')){
+        message.channel.send('npm install react')   
+    }
+
+    if(message.content.includes(prefix+'sing')){
+        message.channel.send('HAAAPPPPPYYY BIRTHDAY TO YOOOOUUUU!!!!')   
     }
 
 })
