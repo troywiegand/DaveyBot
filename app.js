@@ -1,6 +1,9 @@
 const Discord= require('discord.js')
 const client = new Discord.Client()
 const settings=  require('./settings.json')
+const daveymad = '<:daveymad:469936457705062412>'
+const daveysmile= '<:daveysmile:469932321387053077>'
+
 let pokemonBool=true
 let animeBool=true
 let cussBool=true
@@ -26,7 +29,7 @@ food = (message) =>{
 }
 
 help = (message) =>{
-    message.channel.send('Hello, I\'m Davey Bot. \n Here\'s a list of my commands: \n \n '+
+    message.channel.send(`Hello, I\'m Davey Bot. ${daveysmile} \n Here\'s a list of my commands: \n \n `+
     'd!food     ------ Davey Bot will tell one of his fave foods. \n '+
     'd!shrimp   ------ Davey Bot will inform on how to deal with the Shrimp Button. \n '+
     'd!sing     ------ Davey Bot will sing Happy Birthday to you. \n '+
@@ -43,14 +46,9 @@ help = (message) =>{
 let prefix = 'd!'
 client.on('message', message=>{
     if(message.author===client.user) return
-    if(message.content.startsWith(prefix + "food")){
-        food(message)
-    }
-    if(message.content.startsWith(prefix + "help")){
-        help(message)
-    }
+    
     if(cussBool && (message.content.includes('fuck') ||message.content.includes('Fuck') ||message.content.includes('shit') )){
-        message.channel.send('Don\'t you cuss at me!')   
+        message.channel.send(`Don't you cuss at me! ${daveymad}`)   
     }
 
 
@@ -68,6 +66,14 @@ client.on('message', message=>{
 
     if(message.content.includes('anime')){
         message.channel.send('I hear you kids like the anime')   
+    }
+
+    if(message.content.startsWith(prefix + "food")){
+        food(message)
+    }
+    
+    if(message.content.startsWith(prefix + "help")){
+        help(message)
     }
 
     if(message.content.includes(prefix+'shrimp')){
