@@ -1,17 +1,18 @@
 const Discord= require('discord.js')
 const client = new Discord.Client()
-const settings=  require('./settings.json')
+const token=  require('./settings.json').token
 const daveymad = '<:daveymad:469936457705062412>'
 const daveysmile= '<:daveysmile:469932321387053077>'
 
-let pokemonBool=true
+let pokemonBool=false
 let animeBool=true
-let cussBool=true
+let cussBool=false
 let jesusBool=true
 let reactBool=true
 
 client.on('ready', ()=>{
     console.log('ONLINE')
+    client.user.setGame('React')
 })
 
 food = (message) =>{
@@ -45,28 +46,34 @@ help = (message) =>{
 
 let prefix = 'd!'
 client.on('message', message=>{
-    if(message.author===client.user) return
+
+    //FAILSAFE TO STOP DAVEY BOT TO GO INFINITE OFF OF ITSELF OR OTHER BOTS
+    if(message.author.bot) return
+
+
+    //AUTOMATIC REPLIES
     
     if(cussBool && (message.content.includes('fuck') ||message.content.includes('Fuck') ||message.content.includes('shit') )){
         message.channel.send(`Don't you cuss at me! ${daveymad}`)   
     }
 
-
-    if(message.content.includes('jesus') || message.content.includes('Jesus')){
+    if(jesusBool&&(message.content.includes('jesus') || message.content.includes('Jesus'))){
         message.channel.send('You can just call me Davey Bot')   
     }
 
-    if(message.content.includes('React')||message.content.includes('react')){
+    if(reactBool && (message.content.includes('React')||message.content.includes('react'))){
         message.channel.send('npm install react')   
     }
 
-    if(message.content.includes('pokemon')){
+    if(message.content.includes('pokemon') && pokemonBool){
         message.channel.send('idk if I could catch them all')   
     }
 
-    if(message.content.includes('anime')){
+    if(message.content.includes('anime') && animeBool){
         message.channel.send('I hear you kids like the anime')   
     }
+
+    //COMMANDS THAT WHEN USED JUST GIVE A MESSAGE BACK
 
     if(message.content.startsWith(prefix + "food")){
         food(message)
@@ -91,6 +98,8 @@ client.on('message', message=>{
     if(message.content.includes(prefix+'sing')){
         message.channel.send('HAAAPPPPPYYY BIRTHDAY TO YOOOOUUUU!!!!')   
     }
+
+    //COMMANDS THAT TURN ON/OFF AUTOMATIC REPONSES
 
     if(message.content.includes(prefix+'cuss')){
        cussBool=!cussBool
@@ -137,4 +146,4 @@ client.on('message', message=>{
 
 
 
-client.login(settings.token)
+client.login(token)
