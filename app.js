@@ -12,13 +12,16 @@ let reactBool=true
 
 client.on('ready', ()=>{
     console.log('ONLINE')
-    client.user.setGame('React')
+    client.user.setActivity('CHRI$ MOVIE$',{url:"http://bootcamp18s3.fretless.com/chrismess/", type: "WATCHING"})
 })
 
 food = (message) =>{
     const random=Math.floor(Math.random() * 6)
-    if(random===0||random===1)
+    if(random===0||random===1){
     message.channel.send('TWAMWICHES!!')
+   
+      .catch(console.error);
+}
     if(random===2)
     message.channel.send('pancakes')
     if(random===3)
@@ -40,7 +43,8 @@ help = (message) =>{
     'd!anime    ------ Davey Bot will turn off/on his comment about anime. \n '+
     'd!cuss     ------ Davey Bot will turn off/on his comment about curse words.\n '+
     'd!jesus    ------ Davey Bot will turn off/on reminding you to just call him Davey Bot. \n '+
-    'd!react    ------ Davey Bot will turn off/on trying to get you to install React.\n '
+    'd!react    ------ Davey Bot will turn off/on trying to get you to install React.\n '+
+    'd!join     ------ Davey Bot will join your VC and yell his iconic "TWAMMICHES".\n '
 )
 }
 
@@ -143,7 +147,24 @@ client.on('message', message=>{
 
 })
 
+client.on('message', async message => {
+    // Voice only works in guilds, if the message does not come from a guild,
+    // we ignore it.
+    if (!message.guild) return;
+  
+    if (message.content === 'd!join') {
+      // Only try to join the sender's voice channel if they are in one themselves
+      if (message.member.voiceChannel) {
+        const connection = await message.member.voiceChannel.join();
+        const dispatcher = connection.playStream('./twammiches1.wav');
+      } else {
+        message.reply('You need to join a voice channel first!');
+      }
 
+      
+
+    }
+  });
 
 
 client.login(token)
