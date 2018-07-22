@@ -120,6 +120,10 @@ client.on('message', message=>{
         message.channel.send('HAAAPPPPPYYY BIRTHDAY TO YOOOOUUUU!!!!')   
     }
 
+    if(message.content.includes(prefix+'robotrock')){
+        message.channel.send('d!play robot rock')   
+    }
+
     //COMMANDS THAT TURN ON/OFF AUTOMATIC REPONSES
 
     if(message.content.includes(prefix+'cuss')){
