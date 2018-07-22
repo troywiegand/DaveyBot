@@ -1,9 +1,13 @@
 const Discord= require('discord.js')
+const Music= require('discord.js-musicbot-addon');
 const client = new Discord.Client()
 const token=  require('./settings.json').token
+const ytAPIKey= require('./settings.json').ytAPIKey
+
 const daveymad = '<:daveymad:469936457705062412>'
 const daveysmile= '<:daveysmile:469932321387053077>'
 
+let prefix = 'd!'
 let pokemonBool=false
 let animeBool=true
 let cussBool=false
@@ -15,12 +19,24 @@ client.on('ready', ()=>{
     client.user.setActivity('CHRI$ MOVIE$',{url:"http://bootcamp18s3.fretless.com/chrismess/", type: "WATCHING"})
 })
 
+Music.start(client, {
+    youtubeKey: ytAPIKey,
+    prefix: prefix,
+    helpCmd: "musichelp",
+    enableQueueStat: true,
+    anyoneCanSkip: true,
+    anyoneCanPause: true,
+    anyoneCanLeave:true,
+    requesterName: true,
+    embedColor: 'DARK_RED',
+  });
+
 food = (message) =>{
     const random=Math.floor(Math.random() * 6)
     if(random===0||random===1){
     message.channel.send('TWAMWICHES!!')
-   
-      .catch(console.error);
+
+      
 }
     if(random===2)
     message.channel.send('pancakes')
@@ -34,21 +50,22 @@ food = (message) =>{
 
 help = (message) =>{
     message.channel.send(`Hello, I\'m Davey Bot. ${daveysmile} \n Here\'s a list of my commands: \n \n `+
-    'd!food     ------ Davey Bot will tell one of his fave foods. \n '+
-    'd!shrimp   ------ Davey Bot will inform on how to deal with the Shrimp Button. \n '+
-    'd!sing     ------ Davey Bot will sing Happy Birthday to you. \n '+
-    'd!fortnite ------ Davey Bot will complain about kids and fortnite. \n '+
-    'd!fretless ------ Davey Bot will tell the tale of starting Fretless. \n '+
-    'd!pokemon  ------ Davey Bot will turn off/on his comment about Pokemon. \n '+
-    'd!anime    ------ Davey Bot will turn off/on his comment about anime. \n '+
-    'd!cuss     ------ Davey Bot will turn off/on his comment about curse words.\n '+
-    'd!jesus    ------ Davey Bot will turn off/on reminding you to just call him Davey Bot. \n '+
-    'd!react    ------ Davey Bot will turn off/on trying to get you to install React.\n '+
-    'd!join     ------ Davey Bot will join your VC and yell his iconic "TWAMMICHES".\n '
+    'd!food      ------ Davey Bot will tell one of his fave foods. \n '+
+    'd!shrimp    ------ Davey Bot will inform on how to deal with the Shrimp Button. \n '+
+    'd!sing      ------ Davey Bot will sing Happy Birthday to you. \n '+
+    'd!fortnite  ------ Davey Bot will complain about kids and fortnite. \n '+
+    'd!fretless  ------ Davey Bot will tell the tale of starting Fretless. \n '+
+    'd!pokemon   ------ Davey Bot will turn off/on his comment about Pokemon. \n '+
+    'd!anime     ------ Davey Bot will turn off/on his comment about anime. \n '+
+    'd!cuss      ------ Davey Bot will turn off/on his comment about curse words.\n '+
+    'd!jesus     ------ Davey Bot will turn off/on reminding you to just call him Davey Bot. \n '+
+    'd!react     ------ Davey Bot will turn off/on trying to get you to install React.\n '+
+    'd!join      ------ Davey Bot will join your VC and yell his iconic "TWAMMICHES".\n '+
+    'd!musichelp ------ Davey Bot will help you work the Music Bot library.\n '
 )
 }
 
-let prefix = 'd!'
+
 client.on('message', message=>{
 
     //FAILSAFE TO STOP DAVEY BOT TO GO INFINITE OFF OF ITSELF OR OTHER BOTS
@@ -147,6 +164,7 @@ client.on('message', message=>{
 
 })
 
+//Seperate message listener for voice shenanigans
 client.on('message', async message => {
     // Voice only works in guilds, if the message does not come from a guild,
     // we ignore it.
@@ -159,11 +177,34 @@ client.on('message', async message => {
         const dispatcher = connection.playStream('./twammiches1.wav');
       } else {
         message.reply('You need to join a voice channel first!');
-      }
-
-      
+      }  
 
     }
+
+    if(message.content.startsWith(prefix+'play')){
+        let rest = message.content.split(' ')
+        rest.splice(0,1)
+        rest = rest.join(" ")
+
+        if(client.internal.voiceConnection){
+            var connection = client.internal.voiceConnection;
+            var request = require("request");
+            connection.playRawStream(request(rest)).then(intent => {
+				client.reply(message, "playing!").then((msg) => {
+					
+					intent.on("end", () => {
+						client.updateMessage(msg, "that song has finished now.");
+					});
+					
+				});
+				
+			});
+        }
+    }
+
+
+
+
   });
 
 
