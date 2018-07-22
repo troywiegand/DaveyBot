@@ -1,9 +1,9 @@
 const Discord= require('discord.js')
-const Music= require('discord.js-musicbot-addon');
+const Music= require('discord.js-musicbot-addon')
 const client = new Discord.Client()
+
 const token=  require('./settings.json').token
 const ytAPIKey= require('./settings.json').ytAPIKey
-
 const daveymad = '<:daveymad:469936457705062412>'
 const daveysmile= '<:daveysmile:469932321387053077>'
 
@@ -14,30 +14,30 @@ let cussBool=false
 let jesusBool=true
 let reactBool=true
 
+//Runs when bot logs on to a server
 client.on('ready', ()=>{
     console.log('ONLINE')
     client.user.setActivity('CHRI$ MOVIE$',{url:"http://bootcamp18s3.fretless.com/chrismess/", type: "WATCHING"})
 })
 
+//Runs all music/VC features
 Music.start(client, {
     youtubeKey: ytAPIKey,
     prefix: prefix,
-    helpCmd: "musichelp",
+    helpCmd: 'musichelp',
     enableQueueStat: true,
     anyoneCanSkip: true,
     anyoneCanPause: true,
     anyoneCanLeave:true,
     requesterName: true,
     embedColor: 'DARK_RED',
-  });
+    JoinCmd: 'joinchannel'
+  })
 
 food = (message) =>{
     const random=Math.floor(Math.random() * 6)
-    if(random===0||random===1){
+    if(random===0||random===1)
     message.channel.send('TWAMWICHES!!')
-
-      
-}
     if(random===2)
     message.channel.send('pancakes')
     if(random===3)
@@ -65,7 +65,7 @@ help = (message) =>{
 )
 }
 
-
+//All the text based Davey Bot shennanigans 
 client.on('message', message=>{
 
     //FAILSAFE TO STOP DAVEY BOT TO GO INFINITE OFF OF ITSELF OR OTHER BOTS
@@ -168,7 +168,9 @@ client.on('message', message=>{
 
 })
 
-//Seperate message listener for voice shenanigans
+//Seperate message listener for voice shenanigans.
+//They are asyncronous 
+//There is a join command in discord-music-bot-addon , but that one doesn't play twammwhiches on entry
 client.on('message', async message => {
     // Voice only works in guilds, if the message does not come from a guild,
     // we ignore it.
@@ -184,30 +186,6 @@ client.on('message', async message => {
       }  
 
     }
-
-    if(message.content.startsWith(prefix+'play')){
-        let rest = message.content.split(' ')
-        rest.splice(0,1)
-        rest = rest.join(" ")
-
-        if(client.internal.voiceConnection){
-            var connection = client.internal.voiceConnection;
-            var request = require("request");
-            connection.playRawStream(request(rest)).then(intent => {
-				client.reply(message, "playing!").then((msg) => {
-					
-					intent.on("end", () => {
-						client.updateMessage(msg, "that song has finished now.");
-					});
-					
-				});
-				
-			});
-        }
-    }
-
-
-
 
   });
 
